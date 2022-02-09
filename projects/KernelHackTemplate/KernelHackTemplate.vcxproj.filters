@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Main.c" />
+    <ClCompile Include="src\Memory\Memory.c">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Memory\PhysicalMemory.c">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Memory\AddressTranslator.c">
+      <Filter>Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Process\Module.c">
+      <Filter>Process</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Process\Process.c">
+      <Filter>Process</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utility\PspCidTable.c">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Var.c" />
+    <ClCompile Include="src\Thread\Thread.c">
+      <Filter>Thread</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{d1f11e96-164e-4610-8a38-62cfc4d6fb5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Def">
+      <UniqueIdentifier>{5c52d620-89e9-4853-90d2-7018927b0f55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Process">
+      <UniqueIdentifier>{56e05d50-75b0-4d42-b690-8c9fad8f12f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{40cc77c9-5901-41fb-9d5d-1d54c85d89ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Thread">
+      <UniqueIdentifier>{a0d9406c-2d70-4284-b781-3dec951020c1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Include\Memory\Memory.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\Memory\PhysicalMemory.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\NtApis.h">
+      <Filter>Def</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\WinVerDef.h">
+      <Filter>Def</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\Memory\AddressTranslator.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\Process\Module.h">
+      <Filter>Process</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\Process\Process.h">
+      <Filter>Process</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\Utility\PspCidTable.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\Var.h" />
+    <ClInclude Include="src\Include\Thread\Thread.h">
+      <Filter>Thread</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\NtStructs.h">
+      <Filter>Def</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\Register.h">
+      <Filter>Def</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

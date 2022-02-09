@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Document Version="2">
+    <Protection InputFileName="KHackTemplate.sys" Options="991176">
+        <Messages />
+        <Folders />
+        <Procedures>
+            <Procedure MapAddress="get_process_by_name_callback" Options="0" />
+            <Procedure MapAddress="get_process_by_name" Options="0" />
+            <Procedure MapAddress="DriverEntry" Options="0" CompilationType="2" />
+            <Procedure MapAddress="internal_set_thread_hidden_callback" Options="0" />
+            <Procedure MapAddress="internal_set_thread_hidden2_callback" Options="0" />
+        </Procedures>
+        <Objects />
+    </Protection>
+    <DLLBox>
+        <Folders />
+    </DLLBox>
+    <Script />
+    <LicenseManager />
+</Document>

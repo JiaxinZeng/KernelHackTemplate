@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "x64",
+            "includePath": [
+                "C:/Users/zengj/source/repos/KernelHackTemplate/projects/KernelHackTemplate/src/Include",
+                "D:/Windows Kits/10/Include/10.0.19041.0/km/crt/**",
+                "D:/Windows Kits/10/Include/10.0.19041.0/km/**",
+                "D:/Windows Kits/10/Include/10.0.19041.0/shared/**",
+                "D:/Windows Kits/10/Include/wdf/kmdf/1.15/**"
+            ],
+            "compilerPath": "",
+            "cStandard": "c17",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "windows-msvc-x64"
+        }
+    ],
+    "version": 4
+}

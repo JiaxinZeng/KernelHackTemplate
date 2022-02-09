@@ -1,0 +1,5 @@
+.vs
+build/obj
+build/*.pdb
+build/*.sys
+.vscode/settings.json
