@@ -1,5 +1,7 @@
 #include <ntifs.h>
 
+#include "Var.h"
+
 #include "Utility/PspCidTable.h"
 
 static ULONG_PTR psp_cid_table_address = 0;
@@ -154,8 +156,11 @@ static void parse_table3(const ULONG64 base_address)
 
 BOOLEAN enum_psp_cid_table(const fn_enum_psp_cid_table_callback callback)
 {
+	ExAcquireFastMutex(&enum_psp_cid_table_lock);
+
 	if (!psp_cid_table_address && !get_psp_cid_table())
 	{
+		ExReleaseFastMutex(&enum_psp_cid_table_lock);
 		return FALSE;
 	}
 
@@ -175,7 +180,9 @@ BOOLEAN enum_psp_cid_table(const fn_enum_psp_cid_table_callback callback)
 		parse_table3(table_code & ~3);
 		break;
 	default:
+		ExReleaseFastMutex(&enum_psp_cid_table_lock);
 		return FALSE;
 	}
+	ExReleaseFastMutex(&enum_psp_cid_table_lock);
 	return TRUE;
 }

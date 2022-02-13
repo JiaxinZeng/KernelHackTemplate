@@ -1,5 +1,5 @@
-#ifndef K_HACK_TEMPLATE_NT_APIS
-#define K_HACK_TEMPLATE_NT_APIS
+#ifndef K_HACK_TEMPLATE_NT_API
+#define K_HACK_TEMPLATE_NT_API
 
 #include <ntifs.h>
 

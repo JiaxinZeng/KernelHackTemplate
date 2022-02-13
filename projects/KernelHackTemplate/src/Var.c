@@ -1,7 +1,6 @@
 #include <ntifs.h>
 
 #include "Var.h"
-#include "NtApis.h"
 
 BOOLEAN init_vars()
 {
@@ -22,7 +21,10 @@ BOOLEAN init_vars()
 	}
 	current_win_build_number = ver.dwBuildNumber;
 
-	KeInitializeSpinLock(&set_thread_hidden_lock);
+	ExInitializeFastMutex(&set_thread_hidden_lock);
+	ExInitializeFastMutex(&enum_psp_cid_table_lock);
+	ExInitializeFastMutex(&get_process_by_name_lock);
+	ExInitializeFastMutex(&set_thread_persistent_lock);
 
 	return TRUE;
 }

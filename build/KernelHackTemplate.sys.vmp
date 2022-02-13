@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Document Version="2">
+    <Protection InputFileName="KernelHackTemplate.sys" Options="991176">
+        <Messages />
+        <Folders />
+        <Procedures>
+            <Procedure MapAddress="swap_process" Options="0" CompilationType="2" />
+            <Procedure MapAddress="DriverEntry" Options="0" CompilationType="2" />
+            <Procedure MapAddress="set_thread_hidden" Options="0" CompilationType="2" />
+            <Procedure MapAddress="init_vars" Options="0" CompilationType="2" />
+            <Procedure MapAddress="internal_set_thread_hidden" Options="0" CompilationType="2" />
+            <Procedure MapAddress="internal_set_thread_hidden2" Options="0" CompilationType="2" />
+            <Procedure MapAddress="internal_set_thread_hidden_callback" Options="0" CompilationType="2" />
+            <Procedure MapAddress="internal_set_thread_hidden2_callback" Options="0" CompilationType="2" />
+            <Procedure MapAddress="enum_psp_cid_table" Options="0" />
+            <Procedure MapAddress="get_psp_cid_table" Options="0" CompilationType="2" />
+            <Procedure MapAddress="parse_table1" Options="0" />
+            <Procedure MapAddress="parse_table2" Options="0" />
+            <Procedure MapAddress="parse_table3" Options="0" />
+        </Procedures>
+        <Objects />
+    </Protection>
+    <DLLBox>
+        <Folders />
+    </DLLBox>
+    <Script />
+    <LicenseManager />
+</Document>

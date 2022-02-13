@@ -1,6 +1,6 @@
 #include <ntifs.h>
 
-#include "NtApis.h"
+#include "NtApi.h"
 #include "Process/Module.h"
 
 void* get_module_base_address(const wchar_t* module_name, const ULONG64 pid)

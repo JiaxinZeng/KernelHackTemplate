@@ -1,0 +1,6 @@
+#ifndef KERNEL_OPERATOR_SEH_NT_API
+#define KERNEL_OPERATOR_SEH_NT_API
+
+
+
+#endif

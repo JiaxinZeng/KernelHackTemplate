@@ -24,6 +24,7 @@
     <ClCompile Include="src\Thread\Thread.c">
       <Filter>Thread</Filter>
     </ClCompile>
+    <ClCompile Include="src\Offset.c" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Memory">
@@ -49,7 +50,7 @@
     <ClInclude Include="src\Include\Memory\PhysicalMemory.h">
       <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="src\Include\NtApis.h">
+    <ClInclude Include="src\Include\NtApi.h">
       <Filter>Def</Filter>
     </ClInclude>
     <ClInclude Include="src\Include\WinVerDef.h">
@@ -71,11 +72,15 @@
     <ClInclude Include="src\Include\Thread\Thread.h">
       <Filter>Thread</Filter>
     </ClInclude>
-    <ClInclude Include="src\Include\NtStructs.h">
+    <ClInclude Include="src\Include\NtStruct.h">
       <Filter>Def</Filter>
     </ClInclude>
+    <ClInclude Include="src\Include\Offset.h" />
     <ClInclude Include="src\Include\Register.h">
       <Filter>Def</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Include\Utility\Sleep.h">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.32106.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KernelHackTemplate", "projects\KernelHackTemplate\KernelHackTemplate.vcxproj", "{B47FA901-5BDE-482B-B146-B853358E949B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1A0383C1-8670-43B0-8503-3B1C99FA3BE6} = {1A0383C1-8670-43B0-8503-3B1C99FA3BE6}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KernelOperatorSEH", "projects\KernelOperatorSEH\KernelOperatorSEH.vcxproj", "{1A0383C1-8670-43B0-8503-3B1C99FA3BE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +18,9 @@ Global
 		{B47FA901-5BDE-482B-B146-B853358E949B}.Release|x64.ActiveCfg = Release|x64
 		{B47FA901-5BDE-482B-B146-B853358E949B}.Release|x64.Build.0 = Release|x64
 		{B47FA901-5BDE-482B-B146-B853358E949B}.Release|x64.Deploy.0 = Release|x64
+		{1A0383C1-8670-43B0-8503-3B1C99FA3BE6}.Release|x64.ActiveCfg = Release|x64
+		{1A0383C1-8670-43B0-8503-3B1C99FA3BE6}.Release|x64.Build.0 = Release|x64
+		{1A0383C1-8670-43B0-8503-3B1C99FA3BE6}.Release|x64.Deploy.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

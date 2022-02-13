@@ -41,7 +41,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
     <EnableInf2cat>false</EnableInf2cat>
-    <IncludePath>$(ProjectDir)src\Include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)src\Include;$(SolutionDir)projects\KernelOperatorSEH\src\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)build;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -51,8 +52,6 @@
       <WppKernelMode>true</WppKernelMode>
       <MultiProcessorCompilation>
       </MultiProcessorCompilation>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <Optimization>MaxSpeed</Optimization>
       <AdditionalOptions>-mllvm -irobf-indbr -mllvm -irobf-icall -mllvm -irobf-indgv -mllvm -irobf-cse</AdditionalOptions>
@@ -73,6 +72,7 @@
     </Inf>
     <Link>
       <EntryPointSymbol>DriverEntry</EntryPointSymbol>
+      <AdditionalDependencies>KernelOperatorSEH.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -80,6 +80,7 @@
     <ClCompile Include="src\Memory\AddressTranslator.c" />
     <ClCompile Include="src\Memory\Memory.c" />
     <ClCompile Include="src\Memory\PhysicalMemory.c" />
+    <ClCompile Include="src\Offset.c" />
     <ClCompile Include="src\Process\Module.c" />
     <ClCompile Include="src\Process\Process.c" />
     <ClCompile Include="src\Thread\Thread.c" />
@@ -90,13 +91,15 @@
     <ClInclude Include="src\Include\Memory\AddressTranslator.h" />
     <ClInclude Include="src\Include\Memory\Memory.h" />
     <ClInclude Include="src\Include\Memory\PhysicalMemory.h" />
-    <ClInclude Include="src\Include\NtApis.h" />
-    <ClInclude Include="src\Include\NtStructs.h" />
+    <ClInclude Include="src\Include\NtApi.h" />
+    <ClInclude Include="src\Include\NtStruct.h" />
+    <ClInclude Include="src\Include\Offset.h" />
     <ClInclude Include="src\Include\Process\Module.h" />
     <ClInclude Include="src\Include\Process\Process.h" />
     <ClInclude Include="src\Include\Register.h" />
     <ClInclude Include="src\Include\Thread\Thread.h" />
     <ClInclude Include="src\Include\Utility\PspCidTable.h" />
+    <ClInclude Include="src\Include\Utility\Sleep.h" />
     <ClInclude Include="src\Include\Var.h" />
     <ClInclude Include="src\Include\WinVerDef.h" />
   </ItemGroup>
