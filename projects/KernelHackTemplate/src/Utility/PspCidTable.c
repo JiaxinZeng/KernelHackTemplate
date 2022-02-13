@@ -1,14 +1,101 @@
 #include <ntifs.h>
 
-#include "Var.h"
-
 #include "Utility/PspCidTable.h"
 
 static ULONG_PTR psp_cid_table_address = 0;
 
-static fn_enum_psp_cid_table_callback parse_table1_callback = NULL;
+static BOOLEAN parse_table1(const ULONG_PTR base_address,
+                            const int index1,
+                            const int index2,
+                            const fn_enum_psp_cid_table_callback callback)
+{
+	for (int i = 0; i < 256; i++)
+	{
+		if (!MmIsAddressValid((void*)(base_address + (ULONG64)i * 16)))
+		{
+			continue;
+		}
+		const ULONG64 recode = *(ULONG_PTR*)(base_address + (ULONG64)i * 16);
+		const ULONG_PTR decode = (LONG64)recode >> 0x10 & 0xfffffffffffffff0;
 
-static BOOLEAN get_psp_cid_table()
+		PEPROCESS process;
+		PETHREAD thread;
+
+		const ULONG64 id = i * 4ULL + 1024ULL * index1 + 512ULL * index2 * 1024;
+
+		if (callback)
+		{
+			if (!callback(id, (ULONG64*)(base_address + (ULONG64)i * 16), recode, (void*)decode))
+			{
+				return FALSE;
+			}
+			continue;
+		}
+
+		if (NT_SUCCESS(PsLookupProcessByProcessId((HANDLE)id, &process)))
+		{
+			DbgPrint("PID:%llu, i:%d, address:%p, object:%p\n",
+			         id,
+			         i,
+			         (void*)(base_address + (ULONG64)i * 16),
+			         (void*)decode);
+		}
+		else if (NT_SUCCESS(PsLookupThreadByThreadId((HANDLE)id, &thread)))
+		{
+			DbgPrint("TID:%llu, i:%d, address:%p, object:%p\n",
+			         id,
+			         i,
+			         (void*)(base_address + (ULONG64)i * 16),
+			         (void*)decode);
+		}
+	}
+	return TRUE;
+}
+
+static BOOLEAN parse_table2(const ULONG_PTR base_address,
+                            const int index2,
+                            const fn_enum_psp_cid_table_callback callback)
+{
+	for (int i = 0; i < 512; i++)
+	{
+		if (!MmIsAddressValid((void*)(base_address + (ULONG64)i * 8)))
+		{
+			continue;
+		}
+		if (!MmIsAddressValid((void*)*(ULONG_PTR*)(base_address + (ULONG64)i * 8)))
+		{
+			continue;
+		}
+		const ULONG64 base_address1 = *(ULONG_PTR*)(base_address + (ULONG64)i * 8);
+		if (!parse_table1(base_address1, i, index2, callback))
+		{
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
+static void parse_table3(const ULONG64 base_address, const fn_enum_psp_cid_table_callback callback)
+{
+	for (int i = 0; i < 512; i++)
+	{
+		if (!MmIsAddressValid((void*)(base_address + (ULONG64)i * 8)))
+		{
+			continue;
+		}
+		if (!MmIsAddressValid((void*)*(ULONG_PTR*)(base_address + (ULONG64)i * 8)))
+		{
+			continue;
+		}
+		const ULONG64 ul_base_address2 = *(ULONG_PTR*)(base_address + (ULONG64)i * 8);
+		if (!parse_table2(ul_base_address2, i, callback))
+		{
+			return;
+		}
+	}
+}
+
+BOOLEAN init_psp_cid_table()
 {
 	UNICODE_STRING func_name;
 	RtlInitUnicodeString(&func_name, L"PsLookupProcessByProcessId");
@@ -68,121 +155,28 @@ static BOOLEAN get_psp_cid_table()
 	return FALSE;
 }
 
-static BOOLEAN parse_table1(const ULONG_PTR base_address, const int index1, const int index2)
-{
-	for (int i = 0; i < 256; i++)
-	{
-		if (!MmIsAddressValid((void*)(base_address + (ULONG64)i * 16)))
-		{
-			continue;
-		}
-		const ULONG64 recode = *(ULONG_PTR*)(base_address + (ULONG64)i * 16);
-		const ULONG_PTR decode = (LONG64)recode >> 0x10 & 0xfffffffffffffff0;
-
-		PEPROCESS process;
-		PETHREAD thread;
-
-		const ULONG64 id = i * 4ULL + 1024ULL * index1 + 512ULL * index2 * 1024;
-
-		if (parse_table1_callback)
-		{
-			if (!parse_table1_callback(id, (ULONG64*)(base_address + (ULONG64)i * 16), recode, (void*)decode))
-			{
-				return FALSE;
-			}
-			continue;
-		}
-
-		if (NT_SUCCESS(PsLookupProcessByProcessId((HANDLE)id, &process)))
-		{
-			DbgPrint("PID:%llu, i:%d, address:%p, object:%p\n",
-				id,
-				i,
-				(void*)(base_address + (ULONG64)i * 16),
-				(void*)decode);
-		}
-		else if (NT_SUCCESS(PsLookupThreadByThreadId((HANDLE)id, &thread)))
-		{
-			DbgPrint("TID:%llu, i:%d, address:%p, object:%p\n",
-				id,
-				i,
-				(void*)(base_address + (ULONG64)i * 16),
-				(void*)decode);
-		}
-	}
-	return TRUE;
-}
-
-static BOOLEAN parse_table2(const ULONG_PTR base_address, const int index2)
-{
-	for (int i = 0; i < 512; i++)
-	{
-		if (!MmIsAddressValid((void*)(base_address + (ULONG64)i * 8)))
-		{
-			continue;
-		}
-		if (!MmIsAddressValid((void*)*(ULONG_PTR*)(base_address + (ULONG64)i * 8)))
-		{
-			continue;
-		}
-		const ULONG64 base_address1 = *(ULONG_PTR*)(base_address + (ULONG64)i * 8);
-		if (!parse_table1(base_address1, i, index2))
-		{
-			return FALSE;
-		}
-	}
-	return TRUE;
-}
-
-static void parse_table3(const ULONG64 base_address)
-{
-	for (int i = 0; i < 512; i++)
-	{
-		if (!MmIsAddressValid((void*)(base_address + (ULONG64)i * 8)))
-		{
-			continue;
-		}
-		if (!MmIsAddressValid((void*)*(ULONG_PTR*)(base_address + (ULONG64)i * 8)))
-		{
-			continue;
-		}
-		const ULONG64 ul_base_address2 = *(ULONG_PTR*)(base_address + (ULONG64)i * 8);
-		if (!parse_table2(ul_base_address2, i))
-		{
-			return;
-		}
-	}
-}
-
 BOOLEAN enum_psp_cid_table(const fn_enum_psp_cid_table_callback callback)
 {
-	ExAcquireFastMutex(&enum_psp_cid_table_lock);
-
-	if (!psp_cid_table_address && !get_psp_cid_table())
+	if (!psp_cid_table_address)
 	{
-		ExReleaseFastMutex(&enum_psp_cid_table_lock);
 		return FALSE;
 	}
-
-	parse_table1_callback = callback;
 
 	ULONG64 table_code = *(ULONG_PTR*)(*(ULONG_PTR*)psp_cid_table_address + 8);
 	const ULONG64 low2 = table_code & 3;
 	switch (low2)
 	{
 	case 0:
-		parse_table1(table_code & ~3, 0, 0);
+		parse_table1(table_code & ~3, 0, 0, callback);
 		break;
 	case 1:
-		parse_table2(table_code & ~3, 0);
+		parse_table2(table_code & ~3, 0, callback);
 		break;
 	case 2:
-		parse_table3(table_code & ~3);
+		parse_table3(table_code & ~3, callback);
 		break;
 	default:
-		ExReleaseFastMutex(&enum_psp_cid_table_lock);
 		return FALSE;
 	}
-	ExReleaseFastMutex(&enum_psp_cid_table_lock);
 	return TRUE;
 }

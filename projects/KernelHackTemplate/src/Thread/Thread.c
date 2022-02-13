@@ -173,7 +173,7 @@ static BOOLEAN internal_set_thread_hidden2_callback(const ULONG64 id,
 	return FALSE;
 }
 
-static BOOLEAN internal_set_thread_hidden2(const ULONG64 tid, const PETHREAD thread, const BOOLEAN hide)
+static BOOLEAN internal_set_thread_hidden2(const ULONG64 tid, PETHREAD thread, const BOOLEAN hide)
 {
 	internal_set_thread_hidden2_context.hide = hide;
 	internal_set_thread_hidden2_context.tid = tid;
@@ -183,7 +183,7 @@ static BOOLEAN internal_set_thread_hidden2(const ULONG64 tid, const PETHREAD thr
 	return internal_set_thread_hidden2_context.result;
 }
 
-HANDLE create_thread(const PKSTART_ROUTINE start, void* context)
+HANDLE create_thread(PKSTART_ROUTINE start, void* context)
 {
 	HANDLE thread_handle;
 	OBJECT_ATTRIBUTES object_attributes;
@@ -202,7 +202,7 @@ BOOLEAN set_thread_hidden(const ULONG64 tid, PETHREAD thread, const BOOLEAN hide
 	ExAcquireFastMutex(&set_thread_hidden_lock);
 
 	const BOOLEAN result = internal_set_thread_hidden(tid, hide) && internal_set_thread_hidden2(tid, thread, hide);
-	
+
 	ExReleaseFastMutex(&set_thread_hidden_lock);
 
 	return result;

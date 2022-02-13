@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <SEH/Memory.h>
 
-// #include "Memory/Memory.h"
+#include "Utility/PspCidTable.h"
 #include "Process/Process.h"
 #include "Process/Module.h"
 #include "Thread/Thread.h"
@@ -44,7 +44,7 @@ void DriverUnload(DRIVER_OBJECT* driver_object)
 
 BOOLEAN init_driver()
 {
-	return init_vars() && init_offsets();
+	return init_vars() && init_offsets() && init_psp_cid_table();
 }
 
 NTSTATUS NTAPI DriverEntry(DRIVER_OBJECT* driver_object, UNICODE_STRING* registry_path)
